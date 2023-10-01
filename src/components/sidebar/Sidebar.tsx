@@ -1,25 +1,31 @@
 import { Tabs } from "antd";
 import { dataSidebar } from "../../mock/data";
 import { useState } from "react";
+import { TabsPosition } from "antd/es/tabs";
 
 const Sidebar = () => {
-  const [tabPosition, setTabPosition] = useState("left");
-  const changeTabPosition = (e) => {
-    setTabPosition(String(e.target.value));
-  };
+  const [tabPosition] = useState<TabsPosition>("left"); // Specify the type of tabPosition
+
+  // Remove changeTabPosition function if not used
+
   return (
     <div className="h-screen bg-black">
       <Tabs
         className="flex items-center justify-between"
         tabPosition={tabPosition}
-        items={dataSidebar.map((item, i) => {
+      >
+        {dataSidebar.map((item, i) => {
           const id = String(i + 1);
-          return {
-            label: <img src={item.Icons} />,
-            key: id,
-          };
+          return (
+            <Tabs.TabPane
+              tab={<img src={item.Icons} alt={`Tab ${id}`} />}
+              key={id}
+            >
+              Content for Tab {id}
+            </Tabs.TabPane>
+          );
         })}
-      >1</Tabs>
+      </Tabs>
     </div>
   );
 };
